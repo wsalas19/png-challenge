@@ -1,3 +1,6 @@
+import { useState } from "react";
+import EditModal from "./EditModal";
+
 function MovieCard({
 	image,
 	title,
@@ -9,6 +12,8 @@ function MovieCard({
 	synopsis,
 	director,
 	cast,
+	handleRemove,
+	onShow,
 }) {
 	return (
 		<>
@@ -24,6 +29,9 @@ function MovieCard({
 					<div className=" flex flex-row gap-2">
 						<h1 className="font-bold text-lg justify-between">{title}</h1>
 						<p>{language}</p>
+						<a href={trailerUrl} className="pl-3 text-blue-400 underline">
+							Trailer
+						</a>
 					</div>
 					<div className=" flex flex-row gap-2">
 						<p>{duration}</p>
@@ -33,16 +41,23 @@ function MovieCard({
 					<div className=" flex flex-row gap-2">
 						<p className=" font-thin">{synopsis}</p>
 					</div>
-					<div className=" flex flex-row gap-2">
-						<p className=" font-semibold">Director: </p>
-						<p>{director}</p>
-						<p className=" font-semibold">Cast:</p>
-						{cast.map((c) => {
-							return <p key={c}>{c}</p>;
-						})}
-						<a href={trailerUrl} className="pl-3 text-blue-400 underline">
-							Trailer
-						</a>
+					<div className=" flex flex-row gap-2 justify-between">
+						<div className="flex gap-2">
+							<p className=" font-semibold">Director: </p>
+							<p>{director}</p>
+							<p className=" font-semibold">Cast:</p>
+							{cast.map((c, index) => {
+								return <p key={index}>{c}</p>;
+							})}
+						</div>
+					</div>
+					<div className="flex  gap-3">
+						<button onClick={onShow} className=" text-blue-500 underline">
+							Edit
+						</button>
+						<button onClick={handleRemove} className="text-red-500 underline">
+							Remove
+						</button>
 					</div>
 				</div>
 			</div>
@@ -50,12 +65,28 @@ function MovieCard({
 	);
 }
 
-function Movies({ movies }) {
+function Movies({ movies, deleteMovie }) {
+	const [show, setShow] = useState(false);
+	const [selectedMovie, setSelectedMovie] = useState(null);
+	if (movies.length === 0) {
+		return (
+			<div className="flex justify-center">
+				<h1 className=" text-gray-500">0 Movies added.</h1>
+			</div>
+		);
+	}
+
+	const handleEdit = (movie) => {
+		setSelectedMovie(movie); // Set the selected movie when edit button is clicked
+		setShow(true); // Show the edit modal
+	};
+
 	return (
 		<>
-			{movies.map((movie, index) => (
+			{movies.map((movie) => (
 				<MovieCard
-					key={index}
+					onShow={() => handleEdit(movie)}
+					key={movie._id}
 					title={movie.title}
 					director={movie.director}
 					cast={movie.cast}
@@ -66,8 +97,20 @@ function Movies({ movies }) {
 					language={movie.language}
 					trailerUrl={movie.trailerUrl}
 					image={movie.image}
+					handleRemove={() => deleteMovie(movie._id)}
 				/>
 			))}
+
+			{selectedMovie && (
+				<EditModal
+					show={show}
+					onClose={() => {
+						setShow(false);
+						setSelectedMovie(null); // Reset the selected movie when the modal is closed
+					}}
+					movie={selectedMovie} // Pass the selected movie as a prop
+				/>
+			)}
 		</>
 	);
 }

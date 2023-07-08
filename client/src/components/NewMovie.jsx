@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function NewMovie({ show, onCLose /*onSubmit*/ }) {
+function NewMovie({ show, onClose, addMovie }) {
 	const [formData, setFormData] = useState({
 		title: "",
 		language: "",
@@ -37,6 +37,9 @@ function NewMovie({ show, onCLose /*onSubmit*/ }) {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
+		addMovie(formData);
+
 		setFormData({
 			title: "",
 			language: "",
@@ -48,7 +51,7 @@ function NewMovie({ show, onCLose /*onSubmit*/ }) {
 			director: "",
 			cast: [],
 		});
-		onCLose();
+		onClose();
 	};
 
 	return (
@@ -166,7 +169,7 @@ function NewMovie({ show, onCLose /*onSubmit*/ }) {
 							Add Movie
 						</button>
 					</form>
-					<button onClick={onCLose} className="btn-primary w-full">
+					<button onClick={onClose} className="btn-primary w-full">
 						Close
 					</button>
 				</div>

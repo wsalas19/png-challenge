@@ -1,8 +1,9 @@
 import Movies from "./components/MovieCard";
 import NewMovie from "./components/NewMovie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 function App() {
-	const array = [
+	/*const array = [
 		{
 			title: "Barbie",
 			director: "Greta Gerwig",
@@ -46,9 +47,34 @@ function App() {
 			image:
 				"https://m.media-amazon.com/images/M/MV5BM2MyNjQ3NzAtMmFkYS00MTM1LTkxZTAtNTk3MDQ4MTZkNzFiXkEyXkFqcGdeQXVyMTA4NjE0NjEy._V1_.jpg",
 		},
-	];
-
+	];*/
+	const [movies, setMovies] = useState([]);
 	const [show, setShow] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const dataFetch = async () => {
+			try {
+				const { data: response } = await axios.get(
+					"http://localhost:3001/movie"
+				);
+				setMovies(response);
+				setLoading(false);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		dataFetch();
+	}, [movies]);
+
+	const addMovie = async (data) => {
+		let response = await axios.post("http://localhost:3001/movie", data);
+		setMovies([response.data, ...movies]);
+	};
+	const deleteMovie = async (id) => {
+		await axios.delete(`http://localhost:3001/movie/${id}`);
+		setMovies(movies.filter((m) => m.id !== id));
+	};
 
 	return (
 		<>
@@ -62,9 +88,17 @@ function App() {
 			</header>
 
 			<div className="flex flex-col justify-center items-center w-full gap-3">
-				<Movies movies={array} />
+				{loading ? (
+					<h1 className="text-blue-500 font-bold">Loading...</h1>
+				) : (
+					<Movies movies={movies} deleteMovie={deleteMovie} />
+				)}
 			</div>
-			<NewMovie show={show} onCLose={() => setShow(false)} />
+			<NewMovie
+				show={show}
+				onClose={() => setShow(false)}
+				addMovie={addMovie}
+			/>
 		</>
 	);
 }
