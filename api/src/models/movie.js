@@ -11,15 +11,15 @@ const movieSchema = new mongoose.Schema({
 	},
 	classification: {
 		type: String,
-		enum: ["Todo público", "+12 años", "+14 años", "+16 años", "+18 años"],
+		enum: ["G", "PG", "PG-13", "R", "NC-17"],
 		required: true,
 	},
 	duration: {
-		type: Number,
+		type: String,
 		required: true,
 	},
 	releaseDate: {
-		type: Date,
+		type: String,
 		required: true,
 	},
 	trailerUrl: {
@@ -31,6 +31,10 @@ const movieSchema = new mongoose.Schema({
 		required: true,
 	},
 	director: {
+		type: String,
+		required: true,
+	},
+	image: {
 		type: String,
 		required: true,
 	},

@@ -1,5 +1,6 @@
 import Movies from "./components/MovieCard";
-
+import NewMovie from "./components/NewMovie";
+import { useState } from "react";
 function App() {
 	const array = [
 		{
@@ -47,13 +48,15 @@ function App() {
 		},
 	];
 
+	const [show, setShow] = useState(false);
+
 	return (
 		<>
 			<header className=" flex justify-center p-5">
 				<h1 className="font-bold text-blue-700 text-2xl">
 					Royal Films Dashboard
 				</h1>
-				<button className=" bg-blue-700 text-white rounded-md px-4 ml-24  font-extrabold hover:bg-blue-400 transition ">
+				<button onClick={() => setShow(true)} className=" btn-primary ml-24   ">
 					Nueva Pelicula
 				</button>
 			</header>
@@ -61,6 +64,7 @@ function App() {
 			<div className="flex flex-col justify-center items-center w-full gap-3">
 				<Movies movies={array} />
 			</div>
+			<NewMovie show={show} onCLose={() => setShow(false)} />
 		</>
 	);
 }

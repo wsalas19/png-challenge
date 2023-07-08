@@ -24,4 +24,29 @@ router.get("/", async function (req, res) {
 	}
 });
 
+router.post("/", async (req, res) => {
+	const {
+		title,
+		language,
+		classification,
+		duration,
+		releaseDate,
+		trailerUrl,
+		synopsis,
+		director,
+		cast,
+	} = req.body;
+
+	try {
+		const newmovie = new movie(req.body);
+
+		// Save the movie to the database
+		const savedMovie = await newmovie.save();
+
+		res.status(201).json(savedMovie);
+	} catch (error) {
+		res.status(400).send({ message: error.message });
+	}
+});
+
 module.exports = router;
