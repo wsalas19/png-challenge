@@ -166,11 +166,11 @@ function NewMovie({ show, onClose, addMovie }) {
 
 						{/* Submit button */}
 						<button className="btn-primary my-2" type="submit">
-							Add Movie
+							Agregar
 						</button>
 					</form>
 					<button onClick={onClose} className="btn-primary w-full">
-						Close
+						Cerrar
 					</button>
 				</div>
 			</div>

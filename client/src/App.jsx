@@ -75,6 +75,21 @@ function App() {
 		await axios.delete(`http://localhost:3001/movie/${id}`);
 		setMovies(movies.filter((m) => m.id !== id));
 	};
+	const updateMovie = async (data) => {
+		const originalMovie = movies.find((m) => m.id === data.id);
+		try {
+			await axios.put(`http://localhost:3001/movie/${data._id}`, data);
+			setMovies((prevMovies) =>
+				prevMovies.map((m) => (m._id === data._id ? data : m))
+			);
+		} catch (error) {
+			console.log(error);
+
+			setMovies((prevMovies) =>
+				prevMovies.map((m) => (m._id === data._id ? originalMovie : m))
+			);
+		}
+	};
 
 	return (
 		<>
@@ -91,7 +106,11 @@ function App() {
 				{loading ? (
 					<h1 className="text-blue-500 font-bold">Loading...</h1>
 				) : (
-					<Movies movies={movies} deleteMovie={deleteMovie} />
+					<Movies
+						movies={movies}
+						deleteMovie={deleteMovie}
+						updateMovie={updateMovie}
+					/>
 				)}
 			</div>
 			<NewMovie
