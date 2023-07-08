@@ -13,7 +13,13 @@ function MovieCard({
 	return (
 		<>
 			<div className=" bg-slate-100 w-[50%] flex flex-row rounded-lg">
-				<img src={image} alt="movie-poster" className=" aspect-auto w-28 p-2" />
+				<a href={image}>
+					<img
+						src={image}
+						alt="movie-poster"
+						className=" aspect-auto w-24 p-2"
+					/>
+				</a>
 				<div className=" flex flex-col gap-2 p-3">
 					<div className=" flex flex-row gap-2">
 						<h1 className="font-bold text-lg justify-between">{title}</h1>
@@ -44,4 +50,26 @@ function MovieCard({
 	);
 }
 
-export default MovieCard;
+function Movies({ movies }) {
+	return (
+		<>
+			{movies.map((movie, index) => (
+				<MovieCard
+					key={index}
+					title={movie.title}
+					director={movie.director}
+					cast={movie.cast}
+					releaseDate={movie.releaseDate}
+					synopsis={movie.synopsis}
+					classification={movie.classification}
+					duration={movie.duration}
+					language={movie.language}
+					trailerUrl={movie.trailerUrl}
+					image={movie.image}
+				/>
+			))}
+		</>
+	);
+}
+
+export default Movies;
