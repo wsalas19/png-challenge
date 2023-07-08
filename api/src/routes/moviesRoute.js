@@ -2,6 +2,11 @@ var express = require("express");
 const movie = require("../models/movie");
 
 var router = express.Router();
+//helper
+function capitalize(val) {
+	if (typeof val !== "string") val = "";
+	return val.charAt(0).toUpperCase() + val.substring(1);
+}
 
 //get all movies
 router.get("/", async function (req, res) {

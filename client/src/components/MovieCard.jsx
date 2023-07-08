@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EditModal from "./EditModal";
+import { minuteConverter } from "../utils/minuteConverter";
 
 function MovieCard({
 	title,
@@ -16,7 +17,7 @@ function MovieCard({
 }) {
 	return (
 		<>
-			<div className=" bg-slate-100 w-[30%] flex flex-row rounded-lg">
+			<div className=" bg-slate-100 w-[38%] flex flex-row rounded-lg">
 				{/*<a href={image}>
 					<img
 						src={image}
@@ -25,15 +26,15 @@ function MovieCard({
 					/>
 	</a>*/}
 				<div className=" flex flex-col gap-2 p-3">
-					<div className=" flex flex-row gap-2">
-						<h1 className="font-bold text-lg justify-between">{title}</h1>
+					<div className=" flex flex-row gap-4 items-center">
+						<h1 className="font-bold text-lg">{title}</h1>
 						<p>{language}</p>
-						<a href={trailerUrl} className="pl-3 text-blue-400 underline">
+						<a href={trailerUrl} className=" text-blue-400 underline">
 							Trailer
 						</a>
 					</div>
 					<div className=" flex flex-row gap-2">
-						<p>{duration}</p>
+						<p>{minuteConverter(duration)}</p>
 						<p>{releaseDate}</p>
 						<p>{classification}</p>
 					</div>

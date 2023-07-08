@@ -166,7 +166,7 @@ function EditModal({ show, onClose, movie, updateMovie }) {
 
 					{/* Submit button */}
 					<button className="btn-primary my-2" type="submit">
-						Agregar
+						Confirmar
 					</button>
 				</form>
 				<button onClick={onClose} className="btn-primary w-full">

@@ -1,15 +1,9 @@
 const mongoose = require("mongoose");
 
-function capitalize(val) {
-	if (typeof val !== "string") val = "";
-	return val.charAt(0).toUpperCase() + val.substring(1);
-}
-
 const movieSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
-		set: capitalize,
 	},
 	language: {
 		type: String,
