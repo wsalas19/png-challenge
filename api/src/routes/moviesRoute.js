@@ -3,6 +3,7 @@ const movie = require("../models/movie");
 
 var router = express.Router();
 
+//get all movies
 router.get("/", async function (req, res) {
 	const { id } = req.query;
 	if (id) {
@@ -24,7 +25,31 @@ router.get("/", async function (req, res) {
 	}
 });
 
+//add a movie to db
 router.post("/", async (req, res) => {
+	const duplicate = await movie.findOne({ title: req.body.title });
+
+	if (duplicate) {
+		return res
+			.status(400)
+			.send({ message: "This Movie already exists in our records" });
+	}
+
+	try {
+		const newmovie = new movie(req.body);
+
+		// Save the movie to the database
+		const savedMovie = await newmovie.save();
+
+		return res.status(201).json(savedMovie);
+	} catch (error) {
+		return res.status(400).send({ message: error.message });
+	}
+});
+
+//update movie info
+router.put("/:id", async (req, res) => {
+	const { id } = req.params;
 	const {
 		title,
 		language,
@@ -36,16 +61,38 @@ router.post("/", async (req, res) => {
 		director,
 		cast,
 	} = req.body;
+	try {
+		let response = await movie.updateOne(
+			{ _id: id },
+			{
+				$set: {
+					title,
+					language,
+					classification,
+					duration,
+					releaseDate,
+					trailerUrl,
+					synopsis,
+					director,
+					cast,
+				},
+			}
+		);
+		res.status(200).send(response);
+	} catch (error) {
+		res.status(400).send({ error: error.message });
+	}
+});
+
+//remove a movie
+router.delete("/:id", async (req, res) => {
+	const { id } = req.params;
 
 	try {
-		const newmovie = new movie(req.body);
-
-		// Save the movie to the database
-		const savedMovie = await newmovie.save();
-
-		res.status(201).json(savedMovie);
+		let response = await movie.findByIdAndDelete(id);
+		res.status(200).send(response);
 	} catch (error) {
-		res.status(400).send({ message: error.message });
+		res.status(400).send({ error: error.message });
 	}
 });
 
