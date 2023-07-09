@@ -6,6 +6,7 @@ const app = express();
 const moviesRoute = require("./src/routes/moviesRoute");
 
 const PORT = process.env.PORT || 3001;
+const MONGO_URI = process.env.MONGO_URI;
 app.use(cors());
 app.use(express.json());
 app.use("/movie", moviesRoute);
@@ -13,7 +14,7 @@ app.use("/movie", moviesRoute);
 //db connect
 mongoose.set("strictQuery", true);
 mongoose
-	.connect("mongodb+srv://wsalas19:wsalas19@png-rf.5pr7p2q.mongodb.net/") //CHANGE
+	.connect(MONGO_URI)
 	.then(() => console.log("Connected to DB!"))
 	.catch((e) => console.log(e.message));
 
