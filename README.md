@@ -7,7 +7,7 @@ Basic CRUD app to view, add, edit and delete movies added by the user.
 
 
 ## Setup
-Before setup we must add a .env file that contains the MongoDB URI where the DB is hosted. (the address can be found in the email)
+Before setup we must add a .env file at the root of the api folder that contains the MongoDB URI where the DB is hosted. (the address can be found in the email)
 
 The variable must be named MONGO_URI.
 
