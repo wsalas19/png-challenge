@@ -54,6 +54,8 @@ function NewMovie({ show, onClose, addMovie }) {
 		onClose();
 	};
 
+	const isAnyFieldEmpty = Object.values(formData).some((value) => value === "");
+
 	return (
 		<>
 			<div className=" fixed left-0 right-0 top-0 bottom-0 bg-black/50 flex justify-center items-center gap-2 ">
@@ -102,6 +104,8 @@ function NewMovie({ show, onClose, addMovie }) {
 						{/* Duration */}
 						<label htmlFor="duration">Duration (min):</label>
 						<input
+							min={1}
+							max={800}
 							name="duration"
 							type="number"
 							id="duration"
@@ -165,7 +169,11 @@ function NewMovie({ show, onClose, addMovie }) {
 						/>
 
 						{/* Submit button */}
-						<button className="btn-primary my-2" type="submit">
+						<button
+							disabled={isAnyFieldEmpty}
+							className="btn-primary my-2"
+							type="submit"
+						>
 							Agregar
 						</button>
 					</form>

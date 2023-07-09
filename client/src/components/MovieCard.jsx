@@ -18,13 +18,6 @@ function MovieCard({
 	return (
 		<>
 			<div className=" bg-slate-100 w-[38%] flex flex-row rounded-lg">
-				{/*<a href={image}>
-					<img
-						src={image}
-						alt="movie-poster"
-						className=" aspect-auto w-24 p-2"
-					/>
-	</a>*/}
 				<div className=" flex flex-col gap-2 p-3">
 					<div className=" flex flex-row gap-4 items-center">
 						<h1 className="font-bold text-lg">{title}</h1>
@@ -36,7 +29,9 @@ function MovieCard({
 					<div className=" flex flex-row gap-2">
 						<p>{minuteConverter(duration)}</p>
 						<p>{releaseDate}</p>
-						<p>{classification}</p>
+						<p className=" bg-slate-500 text-white w-fit px-2 rounded-sm">
+							{classification}
+						</p>
 					</div>
 					<div className=" flex flex-row gap-2">
 						<p className=" font-thin">{synopsis}</p>
@@ -77,8 +72,8 @@ function Movies({ movies, deleteMovie, updateMovie }) {
 	}
 
 	const handleEdit = (movie) => {
-		setSelectedMovie(movie); // Set the selected movie when edit button is clicked
-		setShow(true); // Show the edit modal
+		setSelectedMovie(movie);
+		setShow(true);
 	};
 
 	return (
@@ -106,10 +101,10 @@ function Movies({ movies, deleteMovie, updateMovie }) {
 					show={show}
 					onClose={() => {
 						setShow(false);
-						setSelectedMovie(null); // Reset the selected movie when the modal is closed
+						setSelectedMovie(null);
 					}}
 					updateMovie={updateMovie}
-					movie={selectedMovie} // Pass the selected movie as a prop
+					movie={selectedMovie}
 				/>
 			)}
 		</>
