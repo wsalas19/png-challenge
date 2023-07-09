@@ -75,7 +75,7 @@ function App() {
 					Nueva Pelicula
 				</button>
 				<select
-					className=" bg-blue-700 text-white font-bold rounded-md px-2 flex text-center"
+					className=" btn-primary flex text-center cursor-pointer"
 					id="classification"
 					name="classification"
 					value={filter}
