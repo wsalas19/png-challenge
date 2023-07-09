@@ -9,6 +9,8 @@ Basic CRUD app to view, add, edit and delete movies added by the user.
 ## Setup
 Before setup we must add a .env file that contains the MongoDB URI where the DB is hosted. (the address can be found in the email)
 
+The variable must be named MONGO_URI.
+
 To setup this project locally, first clone this repo into your local files.
 
 Then open the terminal and search the directory:
